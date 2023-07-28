@@ -8,13 +8,19 @@ const routes: Array<RouteRecordRaw> = [
     component: HomeView
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
+    path: "/BaiDuMapDemo1",
+    name: "BaiDuMapDemo1",
+    meta: {
+      title: "百度地图Demo1",
+      hide: true,
+      noNeedToken: true,
+      noNeedCompanyToken: true,
+    },
+    component: () =>
+      import(
+        /* webpackChunkName: "BaiDuMapDemo1" */ "@/views/BaiDuMapDemo1/index.vue"
+      ),
+  },
 ]
 
 const router = createRouter({

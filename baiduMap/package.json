@@ -9,8 +9,14 @@
   "dependencies": {
     "core-js": "^3.8.3",
     "vue": "^3.2.13",
+    "@types/baidumap-web-sdk": "^0.0.6",
+    "@types/bmapgl": "^0.0.6",
+    "axios": "0.27.2",
+    "moment": "^2.29.4",
+    "vue-baidu-map": "^0.21.22",
     "vue-class-component": "^8.0.0-0",
-    "vue-router": "^4.0.3"
+    "vue-router": "^4.0.3",
+    "vuex": "^4.0.0-0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~5.0.0",

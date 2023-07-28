@@ -1,0 +1,102 @@
+.dot {
+  display: block;
+  width: 22px;
+  height: 22px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  z-index: 50;
+}
+.dot > .before {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+.dot > .before::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  opacity: 0.7;
+  animation: scale 1s infinite cubic-bezier(0, 0, 0.49, 1.02);
+}
+.dot > .after {
+  width: 100%;
+  height: 100%;
+  opacity: 0.4;
+  border-radius: 50%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  animation: scales 1s infinite cubic-bezier(0, 0, 0.49, 1.02);
+}
+.dot:hover {
+  z-index: 100;
+}
+.dot > div {
+  z-index: 3;
+  top: 0;
+  left: 0;
+}
+.orange > .before::after {
+  background-color: orange;
+}
+.orange > .after {
+  background-color: orange;
+}
+.red > .before::after {
+  background-color: red;
+}
+.red > .after {
+  background-color: red;
+}
+.gray > .before::after {
+  background-color: gray;
+}
+.gray > .after {
+  background-color: gray;
+}
+@keyframes scale {
+  0% {
+    transform: scale(1);
+  }
+  50%,
+  75% {
+    transform: scale(3);
+  }
+  78%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes scales {
+  0% {
+    transform: scale(1);
+  }
+  50%,
+  75% {
+    transform: scale(2);
+  }
+  78%,
+  100% {
+    opacity: 0;
+  }
+}
+.page {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+.page .box1 {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: skyblue;
+  z-index: 999;
+}
