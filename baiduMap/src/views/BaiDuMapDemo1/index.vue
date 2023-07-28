@@ -26,7 +26,6 @@ export default {
         let myPoints: MyPoints[] = [];
         /**
          * @method 切换应用场景
-         * 0-all 1-用水告警 2-用电告警 3-烟感告警
          * @param type number
          */
         const changeCurrent = (type: number) => {
