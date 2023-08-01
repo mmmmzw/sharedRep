@@ -7,12 +7,13 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
-    "core-js": "^3.8.3",
-    "vue": "^3.2.13",
     "@types/baidumap-web-sdk": "^0.0.6",
     "@types/bmapgl": "^0.0.6",
     "axios": "0.27.2",
+    "core-js": "^3.8.3",
+    "echarts": "^5.4.3",
     "moment": "^2.29.4",
+    "vue": "^3.2.13",
     "vue-baidu-map": "^0.21.22",
     "vue-class-component": "^8.0.0-0",
     "vue-router": "^4.0.3",

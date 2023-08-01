@@ -8,7 +8,13 @@
         <h2 class="title">BaiDuMapDemo1</h2>
         <h3 class="title">【自定义图标】【波纹动画】【点击图标事件】</h3>
       </div>
-      <div class="box"></div>
+      <div class="box" @click="goToPath('BigEye')">
+        <div class="pic">
+          <img src="@/assets/snapshot/BigEye.png" alt="">
+        </div>
+        <h2 class="title">BigEye</h2>
+        <h3 class="title"></h3>
+      </div>
       <div class="box"></div>
       <div class="box"></div>
     </div>

@@ -12,13 +12,21 @@ const routes: Array<RouteRecordRaw> = [
     name: "BaiDuMapDemo1",
     meta: {
       title: "百度地图Demo1",
-      hide: true,
-      noNeedToken: true,
-      noNeedCompanyToken: true,
     },
     component: () =>
       import(
         /* webpackChunkName: "BaiDuMapDemo1" */ "@/views/BaiDuMapDemo1/index.vue"
+      ),
+  },
+  {
+    path: "/BigEye",
+    name: "BigEye",
+    meta: {
+      title: "大眼",
+    },
+    component: () =>
+      import(
+        /* webpackChunkName: "BigEye" */ "@/views/BigEye/index.vue"
       ),
   },
 ]
