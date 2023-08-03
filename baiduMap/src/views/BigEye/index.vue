@@ -3,6 +3,20 @@
     <div class="eyeSocket eyeSocketSleeping" id="bigEye">
       <div id="eyeball"></div>
     </div>
+    <div class="filter">
+      // 添加滤镜的元素
+      <div class="eyeSocket" id="eyeFilter">// 大眼替身</div>
+    </div>
+    <!-- Svg滤镜 -->
+    <svg width="0">
+      <filter id="filter">
+        <feTurbulence baseFrequency="1">
+          <animate id="animate1" attributeName="baseFrequency" dur="1s" from="0.5" to="0.55" begin="0s;animate1.end"></animate>
+          <animate id="animate2" attributeName="baseFrequency" dur="1s" from="0.55" to="0.5" begin="animate2.end"></animate>
+        </feTurbulence>
+        <feDisplacementMap in="SourceGraphic" scale="50" xChannelSelector="R" yChannelSelector="B" />
+      </filter>
+    </svg>
   </div>
 </template>
 
@@ -10,7 +24,7 @@
 import { ref, inject, onMounted, reactive, nextTick } from "vue"
 import * as echarts from "echarts"
 // 画眼球
-let eyeball
+let eyeball: any
 let eyeballChart: any
 let bigEye: any
 let leftRotSize = 0 // 旋转角度
@@ -18,6 +32,8 @@ let ballSize = 0 // 眼睛尺寸
 let rotTimer: any // 定时器
 let isSleep = true // 是否处于休眠状态
 let ballColor = "transparent" // 默认透明，其实默认是啥都无所谓，反正看不见
+let eyeFilter: any
+let sleepTimer: any // 休眠定时器
 
 function getEyeballChart() {
   eyeballChart.setOption({
@@ -78,6 +94,9 @@ function getEyeballChart() {
 // 唤醒
 function toSleep() {
   clearInterval(rotTimer)
+  document.body.removeEventListener("mousemove", focusOnMouse)
+  bigEye.style.transform = `rotateY(0deg) rotateX(0deg)` // 大眼归位
+  eyeball.style.transform = `translate(0px, 0px)` // 眼睛归位
   rotTimer = setInterval(() => {
     getEyeballChart()
     if (ballSize > 0) {
@@ -92,7 +111,9 @@ function toSleep() {
 }
 function clickToWeakup() {
   isSleep = false // 修改状态
-  bigEye.className = "eyeSocket" // 清除休眠状态
+  // bigEye.className = "eyeSocket" // 清除休眠状态
+  eyeFilter.style.opacity = "1"
+  eyeFilter.className = bigEye.className = "eyeSocket eyeSocketLooking"
   setAngry()
   clearInterval(rotTimer) // 清除定时器
   rotTimer = setInterval(() => {
@@ -118,13 +139,63 @@ function setNormal() {
   document.body.style.setProperty("--c-eyeSocket-inner", "rgb(35, 22, 140)")
   ballColor = "rgb(0,238,255)"
 }
+// ...其他代码
+// 工作
+function focusOnMouse(e) {
+  // 视口尺寸，获取到整个视口的大小
+  let clientWidth = document.body.clientWidth
+  let clientHeight = document.body.clientHeight
+  // 原点，即bigEye中心位置，页面中心
+  let origin = [clientWidth / 2, clientHeight / 2]
+  // 鼠标坐标
+  let mouseCoords = [e.clientX - origin[0], origin[1] - e.clientY]
+  // 旋转角度
+  let eyeXDeg = (mouseCoords[1] / clientHeight) * 100 // 这里的80代表的是最上下边缘大眼X轴旋转角度
+  let eyeYDeg = (mouseCoords[0] / clientWidth) * 80
+  bigEye.style.transform = `rotateY(${eyeYDeg}deg) rotateX(${eyeXDeg}deg)`
+  eyeball.style.transform = `translate(${eyeYDeg / 1.5}px, ${-eyeXDeg / 1.5}px)`
+  if (sleepTimer) clearTimeout(sleepTimer)
+  sleepTimer = setTimeout(() => {
+    toSleep()
+  }, 3000)
+}
+
 onMounted(() => {
   eyeball = document.getElementById("eyeball") // 获取eyeball元素
   bigEye = document.getElementById("bigEye")
+  eyeFilter = document.getElementById("eyeFilter")
   bigEye.addEventListener("click", () => {
     if (!isSleep) return
     clickToWeakup()
   })
+  // ...其他代码
+  bigEye.addEventListener("webkitAnimationEnd", () => {
+    // 监听动画结束事件
+    new Promise((res) => {
+      clearInterval(rotTimer) // 清除定时器
+      rotTimer = setInterval(() => {
+        getEyeballChart() // 更新视图
+        ballSize > 0 && (ballSize -= 0.5) // 眼球尺寸减小
+        leftRotSize === 360 ? (leftRotSize = 0) : (leftRotSize += 0.1)
+        if (ballSize === 0) {
+          // 当眼球尺寸为0时，将Promise标记为resolved，然后执行后面的代码
+          clearInterval(rotTimer)
+          res()
+        }
+      }, 10)
+    }).then(() => {
+      eyeFilter.style.opacity = "0" // 清除光环
+      eyeFilter.className = bigEye.className = "eyeSocket" // 清除环视动画
+      setNormal() // 设置常态样式
+      document.body.addEventListener("mousemove", focusOnMouse)
+      rotTimer = setInterval(() => {
+        getEyeballChart()
+        ballSize <= 12 && (ballSize += 0.1) // 眼球尺寸缓慢增加
+        leftRotSize === 360 ? (leftRotSize = 0) : (leftRotSize += 0.1)
+      }, 10)
+    })
+  })
+
   eyeballChart = echarts.init(eyeball) // 初始化画布
   setNormal()
   //   getEyeballChart()
@@ -141,6 +212,7 @@ onMounted(() => {
 @width: 150px;
 @height: 150px;
 body {
+  perspective: 1000px;
   --c-eyeSocket: rgb(41, 104, 217);
   --c-eyeSocket-outer: #02ffff;
   --c-eyeSocket-outer-shadow: transparent;
@@ -151,8 +223,13 @@ body {
   height: 100%;
   background-color: #1c1d21;
 }
-
-.eyeSocket {
+.filter {
+  width: 100%;
+  height: 100%;
+  filter: url("#filter");
+}
+.eyeSocket,
+.filter .eyeSocket {
   position: absolute;
   left: calc(50% - @width / 2);
   top: calc(50% - @height / 2);
@@ -207,5 +284,36 @@ body {
 }
 .eyeSocketSleeping {
   animation: sleeping 6s infinite;
+}
+.filter .eyeSocket {
+  opacity: 0;
+  left: calc(50% - 92px);
+  top: calc(50% - 92px);
+  transition: all 0.5s ease-in-out;
+}
+
+.eyeSocketLooking {
+  animation: lookAround 2.5s;
+}
+@keyframes lookAround {
+  0% {
+    transform: translateX(0) rotateY(0);
+  }
+
+  10% {
+    transform: translateX(0) rotateY(0);
+  }
+
+  40% {
+    transform: translateX(-70px) rotateY(-30deg);
+  }
+
+  80% {
+    transform: translateX(70px) rotateY(30deg);
+  }
+
+  100% {
+    transform: translateX(0) rotateY(0);
+  }
 }
 </style>
