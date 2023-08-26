@@ -1,0 +1,213 @@
+.page {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+.page .box1 {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: #1890ff;
+  z-index: 999;
+  color: #fff;
+}
+.page .btn {
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+.page h4 {
+  color: #fff;
+}
+.page .flash {
+  width: 56px;
+  height: 56px;
+  position: absolute;
+  top: 608px;
+  left: 1357px;
+  background: url("~@/assets/BaiDuMapDemo2/刷新浮窗.png");
+  background-size: 100% 100%;
+  z-index: 999;
+  cursor: pointer;
+  transition: transform 2s linear;
+}
+.page .flash:hover {
+  opacity: 0.9;
+  transform: rotate(360deg) scale(1.03);
+}
+.dot {
+  display: block;
+  width: 46px;
+  height: 66px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  z-index: 50;
+}
+.dot:hover {
+  z-index: 100;
+}
+.dot > .before {
+  position: absolute;
+  width: 15px;
+  height: 6px;
+  left: 8px;
+  top: 44px;
+  border-radius: 50%;
+}
+.dot > .before::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #128dd8;
+  border-radius: 50%;
+  opacity: 0.5;
+  animation: scale 1.4s infinite cubic-bezier(0, 0, 0.49, 1.02);
+}
+.dot > .after {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 20px;
+  left: 0px;
+  top: 37px;
+  background: #128dd8;
+  border-radius: 50%;
+  opacity: 0.7;
+  animation: scale2 1.4s cubic-bezier(0, 0, 0.49, 1.02) infinite;
+}
+.dot-warning > .after {
+  background: red !important;
+  animation: scale2 1.4s cubic-bezier(0, 0, 0.49, 1.02) infinite !important;
+}
+.dot-warning::before {
+  content: "";
+  position: absolute;
+  width: 60px;
+  height: 30px;
+  top: 33px;
+  left: -13px;
+  background: red;
+  border-radius: 50%;
+  opacity: 1;
+  animation: scale2 1.4s cubic-bezier(0, 0, 0.8, 1.02) infinite;
+}
+.dot-warning::after {
+  content: "";
+  position: absolute;
+  width: 80px;
+  height: 45px;
+  top: 26px;
+  left: -24px;
+  background: red;
+  border-radius: 50%;
+  opacity: 0.5;
+  animation: scale2 1.4s cubic-bezier(0, 0, 0.49, 1.02) infinite;
+}
+@keyframes scale {
+  0% {
+    transform: scale(0.5);
+  }
+  50%,
+  75% {
+    transform: scale(3);
+  }
+  78%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes scale2 {
+  0% {
+    transform: scale(1);
+  }
+  50%,
+  75% {
+    transform: scale(2);
+  }
+  78%,
+  100% {
+    opacity: 0;
+  }
+}
+.dot > div {
+  z-index: 3;
+  top: 0;
+  left: 0;
+}
+.warning-popup {
+  position: absolute;
+  top: 126px;
+  left: 492px;
+  z-index: 66;
+  color: #fff;
+}
+.warning-popup .warning-popup-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.warning-popup .warning-popup-right {
+  position: absolute;
+  top: 0;
+  left: 490px;
+}
+.warning-popup .warning-popup-content {
+  position: relative;
+  width: 424px;
+  height: 103px;
+  background: url("~@/assets/BaiDuMapDemo2/红色警告短弹窗.png");
+  background-size: 100% 100%;
+}
+.warning-popup .warning-popup-content .warning-popup-content-row1 {
+  position: absolute;
+  top: 0px;
+  left: 20px;
+  width: 400px;
+  height: 44px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.warning-popup .warning-popup-content .warning-popup-content-row1 .warning-popup-content-row1-title {
+  font-size: 24px;
+  height: 44px;
+  line-height: 44px;
+}
+.warning-popup .warning-popup-content .warning-popup-content-row1 .warning-popup-content-row1-tag {
+  border-radius: 30px;
+  padding: 2px 9px;
+  border: 1px solid red;
+  color: red;
+  margin-right: 20px;
+}
+.warning-popup .warning-popup-content .warning-popup-content-row2 {
+  position: absolute;
+  top: 50px;
+  left: 20px;
+  width: 400px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  height: 44px;
+  line-height: 44px;
+}
+.warning-popup .warning-popup-content .warning-popup-content-row2 .warning-popup-content-row2-time {
+  margin-right: 20px;
+}
+.warning-popup .warning-popup-close-btn {
+  position: absolute;
+  top: -20px;
+  right: -40px;
+  width: 30px;
+  height: 30px;
+  background: url("~@/assets/BaiDuMapDemo2/红色关闭按钮.png");
+  background-size: 100% 100%;
+  cursor: pointer;
+}

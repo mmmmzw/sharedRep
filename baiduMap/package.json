@@ -9,8 +9,10 @@
   "dependencies": {
     "@types/baidumap-web-sdk": "^0.0.6",
     "@types/bmapgl": "^0.0.6",
+    "ant-design-vue": "3.2.3",
     "axios": "0.27.2",
     "core-js": "^3.8.3",
+    "dayjs": "^1.11.9",
     "echarts": "^5.4.3",
     "moment": "^2.29.4",
     "vue": "^3.2.13",

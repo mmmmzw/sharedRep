@@ -29,6 +29,28 @@ const routes: Array<RouteRecordRaw> = [
         /* webpackChunkName: "BigEye" */ "@/views/BigEye/index.vue"
       ),
   },
+  {
+    path: "/BaiDuMapDemo2",
+    name: "BaiDuMapDemo2",
+    meta: {
+      title: "百度地图Demo2",
+    },
+    component: () =>
+      import(
+        /* webpackChunkName: "BaiDuMapDemo2" */ "@/views/BaiDuMapDemo2/index.vue"
+      ),
+  },
+  {
+    path: "/threejs",
+    name: "threejs",
+    meta: {
+      title: "百度地图Demo2",
+    },
+    component: () =>
+      import(
+        /* webpackChunkName: "threejs" */ "@/views/threejs/demo.vue"
+      ),
+  },
 ]
 
 const router = createRouter({
